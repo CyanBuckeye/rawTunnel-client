@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/Addserver"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="Add Server Address"
+        android:padding="20dp"
+        android:textSize="20dp" />
+    <TextView
+        android:id="@+id/serverName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Server's Name (optional)"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/inputServerName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword" />
+    <TextView
+        android:id="@+id/serverIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Server's IP Address"
+        android:textSize="15dp"/>
+    <EditText
+        android:id="@+id/inputServerIP"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/ServerPortNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Server's IP Port"
+            android:textSize="15dp"/>
+        <EditText
+            android:id="@+id/inputServerPortNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/ClientPortNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Client's IP  Port"
+            android:textSize="15dp"/>
+        <EditText
+            android:id="@+id/inputClientPortNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="160dp"
+        android:layout_marginVertical="30dp"
+        android:text="save"/>
+</LinearLayout>

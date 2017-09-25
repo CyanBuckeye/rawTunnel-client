@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">RawTunnel</string>
+    <string name="addserver">Add Server</string>
+    <string name="helps">helps</string>
+    <string name="record">record</string>
+</resources>

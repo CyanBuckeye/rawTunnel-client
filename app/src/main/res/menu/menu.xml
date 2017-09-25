@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <item android:id="@+id/add_server"
+        android:title="@string/addserver" />
+    <item android:id="@+id/record"
+        android:title="@string/record"/>
+    <item android:id="@+id/help"
+        android:title="@string/helps" />
+</menu>
