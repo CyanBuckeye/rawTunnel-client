@@ -10,6 +10,10 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 enable_language(ASM)
+SET(GCC_COVERAGE_COMPILE_FLAGS "-Wall -Wextra -Wno-unused-variable -Wno-unused-parameter -Wno-missing-field-initializers")
+SET(GCC_COVERAGE_LINK_FLAGS    "-lpthread -lrt -static -O3 -m32")
+SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
+SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
 add_subdirectory(src/main/cpp/lib)
 add_library( # Sets the name of the library.
              native-lib

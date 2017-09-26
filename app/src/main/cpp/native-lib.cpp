@@ -3349,6 +3349,7 @@ Java_com_example_cppdemo_MainActivity_startService(JNIEnv *env, jobject instance
     args[2] = "udp2rawDwrW_503cf4b2_C0";
     args[3] = NULL;
     int erro = execv("/system/bin/iptables", args);
+     //just for execv test
     */
 
     const char *str = env->GetStringUTFChars(str_, 0);

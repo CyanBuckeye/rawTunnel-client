@@ -712,19 +712,10 @@ FILE* my_popen(const char *cmdstring, const char *type, int level)
 	pid_t   pid;
 	FILE    *fp;
 
-	/* only allow "r" or "w" */
 	if (type[0] != 'r' && type[0] != 'w') {
-		errno = EINVAL;     /* required by POSIX.2 */
+		errno = EINVAL;
 		return(NULL);
 	}
-
-	/*
-    if (childpid == NULL) {     // first time through
-                // allocate zeroed out array for child pids
-        if ( (childpid = (pid_t*)calloc(maxfd, sizeof(pid_t))) == NULL)
-            return(NULL);
-    }
-    */
 
 	if (pipe(pfd) < 0)
 		return(NULL);   /* errno set by pipe() */
@@ -745,13 +736,6 @@ FILE* my_popen(const char *cmdstring, const char *type, int level)
 				close(pfd[0]);
 			}
 		}
-
-		/*
-            // close all descriptors in childpid[]
-        for (i = 0; i < maxfd; i++)
-            if (childpid[ i ] > 0)
-                close(i);
-        */
 
 		execl("/system/bin/sh", "sh", "-c", cmdstring, (char *) 0);
 		_exit(127);
@@ -777,15 +761,11 @@ my_pclose(FILE *fp)
 	int     fd, stat;
 	pid_t   pid;
 
-	/*
-    if (childpid == NULL)
-        return(-1);     // popen() has never been called
-    */
 
 	fd = fileno(fp);
 
 	if(map_fileno_pid.find(fd) == map_fileno_pid.end()){
-		return(-1);
+		return(-1); //cannot find fp in map
 	}
 
 	if ( (pid = map_fileno_pid[fd]) == 0)
@@ -798,88 +778,10 @@ my_pclose(FILE *fp)
 
 	while (waitpid(pid, &stat, 0) < 0)
 		if (errno != EINTR)
-			return(-1); /* error other than EINTR from waitpid() */
+			return(-1);
 
-	int es = WIFEXITED(stat);
 	return(stat);   /* return child's termination status */
 }
-/*
-FILE* my_popen(const char* command, char type, int level){
-	int pipe_fd[2];
-	int child_process_id;
-	FILE* fp;
-	if(type != 'w' && type != 'r') return NULL;
-	if(pipe(pipe_fd) < 0){
-		mylog(level,"create pipe failed\n");
-		return NULL;
-	}
-	child_process_id = fork();
-	if(child_process_id < 0){
-		mylog(level, "create child process failed\n");
-		return NULL;
-	}
-
-	if(child_process_id == 0){
-		if(type == 'r'){
-			close(pipe_fd[0]);
-			dup2(pipe_fd[1], STDOUT_FILENO);
-			dup2(pipe_fd[1], STDERR_FILENO);
-			close(pipe_fd[1]);
-		}
-		else{
-			close(pipe_fd[1]);
-			dup2(pipe_fd[0], STDIN_FILENO);
-			close(pipe_fd[0]);
-		}
-
-		string my_command = "ls /system";
-
-		execl("/system/bin/sh", "sh", "-c", my_command.c_str(), (char*)NULL);
-        _exit(127);
-	}
-
-	if(type == 'r'){
-		close(pipe_fd[1]);
-		fp = fdopen(pipe_fd[0], "r");
-	}
-	else{
-		close(pipe_fd[0]);
-		fp = fdopen(pipe_fd[0], "w");
-	}
-	map_fileno_pid[fileno(fp)] = child_process_id;
-	return fp;
-}
-
-int my_pclose(FILE* fp){
-	int      fd, stat;
-	pid_t    pid;
-
-	fd = fileno(fp);
-
-	if(map_fileno_pid.find(fd) == map_fileno_pid.end())
-	{
-		errno = EINVAL;
-		return(-1);    // key does not exist
-	}
-
-	if((pid = map_fileno_pid[fd]) == 0)
-	{
-		errno = EINVAL;
-		return(-1);    //  fp wasn't opened by popen()
-	}
-
-	map_fileno_pid[fd] = 0;
-	if(fclose(fp) == EOF)
-		return(-1);
-
-	while(waitpid(pid, &stat, 0) < 0)
-		if(errno != EINTR)
-			return(-1);    // error other than EINTR from waitpid()
-
-	return(stat);        // return child's termination status
-}
-
-*/
 
 
 
