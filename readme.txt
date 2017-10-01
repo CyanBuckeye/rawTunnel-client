@@ -3,9 +3,9 @@ Wrapped Wangyu's C++ code in Android NDK and made some modifications to cope wit
 
 Finished work:
 1. read C++ source code
-2. Replaced Pthread_kill with my_handler and Pthread_exit
-3. Implemented Popen and Pclose
-4. Implemented simple UI
-5. Wrote CMake file
+2. Replaced Pthread_kill with my_handler and Pthread_exit （/app/src/main/cpp/common.cpp From line 365 to 371)
+3. Implemented Popen and Pclose (/app/src/main/cpp/common.cpp From line 709 to 784)
+4. Implemented simple UI (/app/src/main/res/)
+5. Wrote CMake file 
 (unfinished yet)
 
