@@ -714,14 +714,19 @@ FILE* my_popen(const char *cmdstring, const char *type, int level)
 
 	if (type[0] != 'r' && type[0] != 'w') {
 		errno = EINVAL;
+		mylog(level, "wrong parameter\n");
 		return(NULL);
 	}
 
-	if (pipe(pfd) < 0)
+	if (pipe(pfd) < 0){
+		mylog(level, "cannot open pipe\n");
 		return(NULL);   /* errno set by pipe() */
-
-	if ( (pid = fork()) < 0)
+	}
+	
+	if ( (pid = fork()) < 0){
+		mylog(level, "fork fails\n");
 		return(NULL);   /* errno set by fork() */
+	}
 	else if (pid == 0) {                            /* child */
 		if (*type == 'r') {
 			close(pfd[0]);
@@ -765,11 +770,11 @@ my_pclose(FILE *fp)
 	fd = fileno(fp);
 
 	if(map_fileno_pid.find(fd) == map_fileno_pid.end()){
-		return(-1); //cannot find fp in map
+		return(-1); /* cannot find fp in map */
 	}
 
 	if ( (pid = map_fileno_pid[fd]) == 0)
-		return(-1);     // fp wasn't opened by popen()
+		return(-1);     /* fp wasn't opened by popen() */
 
 
 	map_fileno_pid[fd] = 0;
